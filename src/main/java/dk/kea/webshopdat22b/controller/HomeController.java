@@ -5,6 +5,7 @@ import dk.kea.webshopdat22b.repository.ProductRepository;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -47,8 +48,15 @@ public class HomeController {
     }
 
     //vis update side for produkt ud fra parameter i url
-    @GetMapping("/update")
-    public String showUpdate() {
+    @GetMapping("/update/{id}")
+    public String showUpdate(@PathVariable("id") int updateId, Model model) {
+        //find produkt med id=updateId i databasen
+        Product updateProduct = productRepository.findProductById(updateId);
+
+        //tilføj produkt til viewmodel, så det kan bruges i Thymeleaf
+        model.addAttribute("product", updateProduct);
+
+        //fortæl Spring hvilken HTML-side, der skal vises
         return "update";
     }
 

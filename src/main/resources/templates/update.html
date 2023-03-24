@@ -7,16 +7,16 @@
 <body>
 <div class="container">
     <h1>Opdater eksisterende produkt</h1>
-    <form action="update" method="post">
-        <input id="id-field" name="product-id" type="hidden">
+    <form action="/update" method="post">
+        <input id="id-field" name="product-id" type="hidden" th:value="${product.id}">
 
         <label for="name-field">Produkt navn:</label>
-        <input id="name-field" name="product-name" type="text">
+        <input id="name-field" name="product-name" type="text" th:value="${product.name}">
 
         <label for="price-field">Produkt pris:</label>
-        <input id="price-field" name="product-price" type="number">
+        <input id="price-field" name="product-price" type="number" th:value="${product.price}">
 
-        <input type="submit" value="Opret produkt">
+        <input type="submit" value="Opdater produkt">
     </form>
 </div>
 </body>

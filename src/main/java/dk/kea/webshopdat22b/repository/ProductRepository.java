@@ -30,7 +30,6 @@ public class ProductRepository {
                 productList.add(product);
                 System.out.println(product);
             }
-
         }
         catch(SQLException e)
         {
@@ -57,8 +56,6 @@ public class ProductRepository {
             System.out.println("Could not create product");
             e.printStackTrace();
         }
-
-
     }
 
     public void updateProduct(Product product){
@@ -82,12 +79,45 @@ public class ProductRepository {
 
             //execute statement
             preparedStatement.executeUpdate();
-
         } catch (SQLException e) {
             System.out.println("Could not update product");
             e.printStackTrace();
         }
     }
+
+    public Product findProductById(int id){
+        //SQL-statement
+        final String FIND_QUERY = "SELECT * FROM products WHERE id = ?";
+        Product product = new Product();
+        product.setId(id);
+        try {
+            //db connection
+            Connection connection = DriverManager.getConnection(DB_URL, UID, PWD);
+
+            //prepared statement
+            PreparedStatement preparedStatement = connection.prepareStatement(FIND_QUERY);
+
+            //set parameters
+            preparedStatement.setInt(1, id);
+
+            //execute statement
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            //få product ud af resultset
+            resultSet.next();
+            String name = resultSet.getString(2);
+            double price = resultSet.getDouble(3);
+            product.setName(name);
+            product.setPrice(price);
+        } catch (SQLException e){
+            System.out.println("Could not find product");
+            e.printStackTrace();
+        }
+
+        //return product
+        return product;
+    }
+
 }
 
 
