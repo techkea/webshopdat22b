@@ -113,9 +113,32 @@ public class ProductRepository {
             System.out.println("Could not find product");
             e.printStackTrace();
         }
-
+        System.out.println(product);
         //return product
         return product;
+    }
+
+    public void deleteById(int id){
+        //SQL-query
+        final String DELETE_QUERY = "DELETE FROM products WHERE id=?";
+
+        try {
+            //connect til db
+            Connection connection = DriverManager.getConnection(DB_URL, UID, PWD);
+
+            //create statement
+            PreparedStatement preparedStatement = connection.prepareStatement(DELETE_QUERY);
+
+            //set parameter
+            preparedStatement.setInt(1, id);
+
+            //execute statement
+            preparedStatement.executeUpdate();
+
+        } catch (SQLException e){
+            System.out.println("Could not delete product");
+            e.printStackTrace();
+        }
     }
 
 }

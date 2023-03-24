@@ -13,6 +13,7 @@
                 <th>Produktnavn</th>
                 <th>Pris</th>
                 <th>Update</th>
+                <th>Delete</th>
             </thead>
             <tbody>
                 <tr th:each="product : ${products}">
@@ -27,6 +28,9 @@
                     </td>
                     <td>
                         <a th:href="@{'/update/' + ${product.id}}" href="/update">Opdater</a>
+                    </td>
+                    <td>
+                        <a th:href="@{'/delete/' + ${product.id}}" href="/delete">Slet</a>
                     </td>
                 </tr>
             </tbody>
