@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 @Controller
 public class HomeController {
 
-    ProductRepository productRepository;
+    private ProductRepository productRepository;
 
     public HomeController(ProductRepository productRepository){
         this.productRepository = productRepository;
@@ -32,7 +32,8 @@ public class HomeController {
 
     //fra form action
     @PostMapping("/create")
-    public String createProduct(@RequestParam("product-name") String newName, @RequestParam("product-price") double newPrice){
+    public String createProduct(@RequestParam("product-name") String newName,
+                                @RequestParam("product-price") double newPrice){
         //lave et nyt Product
         Product newProduct = new Product();
         newProduct.setPrice(newPrice);
@@ -44,4 +45,27 @@ public class HomeController {
         //tilbage til produktlisten
         return "redirect:/";
     }
+
+    //vis update side for produkt ud fra parameter i url
+    @GetMapping("/update")
+    public String showUpdate() {
+        return "update";
+    }
+
+    @PostMapping("/update")
+    public String updateProduct(@RequestParam("product-name") String updateName,
+                                @RequestParam("product-price") double updatePrice,
+                                @RequestParam("product-id") int updateId){
+        //lav produkt ud fra parametre
+        Product updateProduct = new Product(updateId, updateName, updatePrice);
+
+        //kald opdater i repository
+        productRepository.updateProduct(updateProduct);
+
+        //rediriger til oversigtssiden
+        return "redirect:/";
+    }
+
+
+
 }

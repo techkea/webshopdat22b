@@ -60,6 +60,34 @@ public class ProductRepository {
 
 
     }
+
+    public void updateProduct(Product product){
+        //SQL statement
+        final String UPDATE_QUERY = "UPDATE products SET name = ?, price = ? WHERE id = ?";
+
+        try {
+            //connect db
+            Connection connection = DriverManager.getConnection(DB_URL, UID, PWD);
+
+            //prepared statement
+            PreparedStatement preparedStatement = connection.prepareStatement(UPDATE_QUERY);
+
+            //set parameters
+            String name = product.getName();
+            double price = product.getPrice();
+            int id = product.getId();
+            preparedStatement.setString(1, name);
+            preparedStatement.setDouble(2, price);
+            preparedStatement.setInt(3, id);
+
+            //execute statement
+            preparedStatement.executeUpdate();
+
+        } catch (SQLException e) {
+            System.out.println("Could not update product");
+            e.printStackTrace();
+        }
+    }
 }
 
 
