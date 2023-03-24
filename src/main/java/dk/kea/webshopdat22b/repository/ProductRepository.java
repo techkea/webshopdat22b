@@ -1,6 +1,7 @@
 package dk.kea.webshopdat22b.repository;
 
 import dk.kea.webshopdat22b.model.Product;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Repository;
 
 import java.sql.*;
@@ -10,10 +11,19 @@ import java.util.List;
 @Repository
 public class ProductRepository {
 
-    //database-properties
-    private final String DB_URL = "jdbc:mysql://localhost:3306/webshopdat22b";
-    private final String UID = "root";
-    private final String PWD = "qJiw03K2zwJD";
+    //database-properties injectes med Value fra application.properties
+    //private final String DB_URL = "jdbc:mysql://localhost:3306/webshopdat22b";
+    //private final String UID = "root";
+    //private final String PWD = "qJiw03K2zwJD";
+
+    @Value("${spring.datasource.url}")
+    private String DB_URL;
+
+    @Value("${spring.datasource.username}")
+    private String UID;
+
+    @Value("${spring.datasource.password}")
+    private String PWD;
 
     public List<Product> getAll(){
         List<Product> productList = new ArrayList<>();
